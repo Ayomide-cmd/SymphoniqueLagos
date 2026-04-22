@@ -6,12 +6,12 @@ import { useRef } from 'react'
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+    transition: { staggerChildren: 0.14, delayChildren: 0.2 },
   },
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -22,8 +22,8 @@ const itemVariants = {
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const headlineY = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
   return (
     <section
@@ -36,95 +36,85 @@ export function Hero() {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         padding: 'clamp(80px, 10vw, 120px) clamp(32px, 6vw, 80px)',
-        background: 'var(--bg-primary)',
         overflow: 'hidden',
+        background: 'var(--bg-primary)',
       }}
     >
-      {/* Scanline texture */}
+      
+      <motion.div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: '-10% 0',
+          y: imageY,
+          backgroundImage: 'url(https://i.pinimg.com/736x/44/50/4b/44504bcf146a066d0a85889056c814cb.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+          backgroundRepeat: 'no-repeat',
+          zIndex: 0,
+        }}
+      />
+
+      
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage:
-            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px)',
-          pointerEvents: 'none',
-          zIndex: 0,
+          background: 'rgba(11,11,12,0.58)',
+          zIndex: 1,
         }}
       />
 
-      {/* Top border rule */}
+      
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '1px',
-          background: 'var(--border-subtle)',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(11,11,12,0.97) 0%, rgba(11,11,12,0.4) 45%, rgba(11,11,12,0.1) 100%)',
+          zIndex: 2,
         }}
       />
 
-      {/* Vertical accent line */}
-      <motion.div
-        aria-hidden="true"
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.4, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          position: 'absolute',
-          left: 'clamp(32px, 6vw, 80px)',
-          top: '0',
-          width: '1px',
-          height: '200px',
-          background: 'var(--accent)',
-          transformOrigin: 'top',
-          opacity: 0.5,
-        }}
-      />
-
-      {/* Main content */}
+      
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        style={{ position: 'relative', zIndex: 1, maxWidth: '960px' }}
+        style={{
+          position: 'relative',
+          zIndex: 3,
+          maxWidth: '860px',
+          opacity: contentOpacity,
+        }}
       >
-        {/* Pre-heading */}
-        <motion.div
-          variants={itemVariants}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '20px',
-            marginBottom: '40px',
-          }}
-        >
-          <span
-            style={{
-              display: 'block',
-              width: '40px',
-              height: '1px',
-              background: 'var(--accent)',
-              flexShrink: 0,
-            }}
-          />
-          <span
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '11px',
-              fontWeight: 400,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-            }}
-          >
-            Conservatory of Music — Lagos, Nigeria
-          </span>
+        
+        <motion.div variants={itemVariants} style={{ marginBottom: '52px' }}>
+          <p style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(13px, 1.4vw, 16px)',
+            fontWeight: 400,
+            letterSpacing: '0.04em',
+            color: 'var(--text-primary)',
+            marginBottom: '6px',
+            opacity: 0.9,
+          }}>
+           
+          </p>
+          <p style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '10px',
+            fontWeight: 400,
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            color: 'var(--accent)',
+          }}>
+            Conservatory of Music
+          </p>
         </motion.div>
 
-        {/* Headline */}
+       
         <motion.h1
           variants={itemVariants}
           style={{
@@ -134,83 +124,57 @@ export function Hero() {
             lineHeight: 1.04,
             letterSpacing: '-0.015em',
             color: 'var(--text-primary)',
-            marginBottom: '56px',
+            marginBottom: '32px',
           }}
         >
-          <motion.span
-            style={{ display: 'block', y: headlineY, opacity }}
-          >
-            Where mastery<br />
-            is the only{' '}
-            <em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>
-              standard
-            </em>.
-          </motion.span>
+          Masters<br />
+          train{' '}
+          <em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>Here</em>.
         </motion.h1>
 
-        {/* Sub row */}
-        <motion.div
+        {/* Body */}
+        <motion.p
           variants={itemVariants}
-          style={{ display: 'flex', alignItems: 'flex-start', gap: '64px' }}
-          className="flex-col sm:flex-row"
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 'clamp(14px, 1.5vw, 16px)',
+            fontWeight: 300,
+            color: 'rgba(245,243,239,0.7)',
+            lineHeight: 1.8,
+            maxWidth: '460px',
+            marginBottom: '32px',
+          }}
         >
-          <div
-            className="hidden sm:block"
+          Symphonique Lagos is a discipline-focused music conservatory
+          offering European-standard training in classical performance,
+          composition, and music theory.
+        </motion.p>
+
+        {/* CTA */}
+        <motion.div variants={itemVariants}>
+          <a
+            href="#programs"
             style={{
-              width: '1px',
-              height: '88px',
-              background: 'var(--border-subtle)',
-              flexShrink: 0,
-              marginTop: '4px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '11px',
+              fontWeight: 400,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: 'var(--text-primary)',
+              textDecoration: 'none',
+              borderBottom: '1px solid var(--accent)',
+              paddingBottom: '4px',
+              transition: 'color 0.25s',
             }}
-          />
-          <div>
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '15px',
-                fontWeight: 300,
-                color: 'var(--text-secondary)',
-                lineHeight: 1.85,
-                maxWidth: '420px',
-                marginBottom: '36px',
-              }}
-            >
-              Symphonique Lagos is a discipline-focused music conservatory
-              offering European-standard training in classical performance,
-              composition, and music theory. We do not offer convenience —
-              we offer rigour.
-            </p>
-            <a
-              href="#programs"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '11px',
-                fontWeight: 400,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                color: 'var(--text-primary)',
-                textDecoration: 'none',
-                borderBottom: '1px solid var(--accent)',
-                paddingBottom: '4px',
-                transition: 'color 0.25s',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget
-                el.style.color = 'var(--accent)'
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget
-                el.style.color = 'var(--text-primary)'
-              }}
-            >
-              Explore Programs
-              <span aria-hidden="true" style={{ fontSize: '14px' }}>→</span>
-            </a>
-          </div>
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
+          >
+            Explore Programs
+            <span aria-hidden="true" style={{ fontSize: '14px' }}>→</span>
+          </a>
         </motion.div>
       </motion.div>
 
@@ -219,75 +183,23 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.2 }}
+        className="hidden md:flex"
         style={{
           position: 'absolute',
           bottom: '56px',
           right: 'clamp(32px, 6vw, 80px)',
-          display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-end',
           gap: '8px',
+          zIndex: 4,
         }}
-        className="hidden md:flex"
       >
-        <span
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '10px',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--text-secondary)',
-          }}
-        >
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,243,239,0.4)' }}>
           Lagos, Nigeria
         </span>
-        <span
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '13px',
-            fontStyle: 'italic',
-            color: 'var(--text-secondary)',
-            opacity: 0.6,
-          }}
-        >
+        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '13px', fontStyle: 'italic', color: 'rgba(245,243,239,0.3)' }}>
           Est. 2018
         </span>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.6 }}
-        style={{
-          position: 'absolute',
-          bottom: '52px',
-          left: 'clamp(32px, 6vw, 80px)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-        }}
-        className="hidden md:flex"
-      >
-        <span
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '10px',
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: 'var(--text-secondary)',
-            opacity: 0.5,
-            writingMode: 'vertical-rl',
-          }}
-        >
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          style={{ width: '1px', height: '40px', background: 'var(--border-subtle)' }}
-        />
       </motion.div>
     </section>
   )

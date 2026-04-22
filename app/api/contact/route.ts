@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { name, email, subject, message } = body
 
-    // Validate required fields
+    
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { error: 'All fields are required.' },
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Validate email format
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -22,17 +22,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // In production: send via Resend, Nodemailer, SendGrid, etc.
-    // Example with Resend:
-    // const resend = new Resend(process.env.RESEND_API_KEY)
-    // await resend.emails.send({
-    //   from: 'noreply@symphoniquelagos.ng',
-    //   to: 'enquiries@symphoniquelagos.ng',
-    //   subject: `[${subject}] New enquiry from ${name}`,
-    //   text: `From: ${name} <${email}>\n\n${message}`,
-    // })
-
-    // Simulate processing delay
+    
     await new Promise((resolve) => setTimeout(resolve, 400))
 
     return NextResponse.json(

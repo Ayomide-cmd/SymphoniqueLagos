@@ -149,7 +149,7 @@ export function Admissions() {
           </motion.div>
         </motion.div>
 
-        {/* Right — process steps */}
+       
         <motion.div
           variants={stagger(0.1, 0.1)}
           initial="hidden"

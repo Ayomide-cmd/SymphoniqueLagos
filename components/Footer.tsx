@@ -48,7 +48,7 @@ export function Footer() {
           Symphonique Lagos
         </motion.a>
 
-        {/* Nav links */}
+       
         <motion.ul
           variants={fadeUp}
           style={{
@@ -81,7 +81,7 @@ export function Footer() {
           ))}
         </motion.ul>
 
-        {/* Copyright */}
+        
         <motion.p
           variants={fadeUp}
           style={{

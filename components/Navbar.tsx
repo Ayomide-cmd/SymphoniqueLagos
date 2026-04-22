@@ -21,7 +21,6 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -50,7 +49,7 @@ export function Navbar() {
           borderBottom: `1px solid ${scrolled ? 'rgba(255,255,255,0.08)' : 'transparent'}`,
         }}
       >
-        {/* Logo */}
+        
         <a
           href="#"
           style={{
@@ -66,7 +65,7 @@ export function Navbar() {
           <span style={{ color: 'var(--accent)' }}>Lagos</span>
         </a>
 
-        {/* Desktop links */}
+        
         <ul
           className="hidden md:flex"
           style={{ gap: '40px', listStyle: 'none' }}
@@ -78,7 +77,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile toggle */}
+        
         <button
           className="flex md:hidden"
           onClick={() => setMobileOpen((v) => !v)}
@@ -88,7 +87,6 @@ export function Navbar() {
             border: 'none',
             cursor: 'pointer',
             padding: '4px',
-            display: 'flex',
             flexDirection: 'column',
             gap: '5px',
           }}
@@ -111,7 +109,7 @@ export function Navbar() {
         </button>
       </motion.nav>
 
-      {/* Mobile Drawer */}
+      
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -183,7 +181,6 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
         color: 'var(--text-secondary)',
         textDecoration: 'none',
         transition: 'color 0.25s ease',
-        position: 'relative',
       }}
       onMouseEnter={(e) => { (e.target as HTMLElement).style.color = 'var(--text-primary)' }}
       onMouseLeave={(e) => { (e.target as HTMLElement).style.color = 'var(--text-secondary)' }}

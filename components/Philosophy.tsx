@@ -38,7 +38,7 @@ export function Philosophy() {
           alignItems: 'center',
         }}
       >
-        {/* Left — pull quote */}
+        
         <motion.div
           variants={stagger(0.1)}
           initial="hidden"
@@ -89,7 +89,7 @@ export function Philosophy() {
           </motion.div>
         </motion.div>
 
-        {/* Right — principles grid */}
+        
         <motion.div
           variants={stagger(0.08)}
           initial="hidden"

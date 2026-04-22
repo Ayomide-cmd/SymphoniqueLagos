@@ -89,7 +89,7 @@ export function Contact() {
           gap: 'clamp(48px, 6vw, 80px)',
         }}
       >
-        {/* Left — contact info */}
+       
         <motion.div
           variants={stagger(0.1)}
           initial="hidden"
@@ -200,7 +200,7 @@ export function Contact() {
           </motion.p>
         </motion.div>
 
-        {/* Right — enquiry form */}
+        
         <motion.div
           variants={stagger(0.08)}
           initial="hidden"
