@@ -47,7 +47,7 @@ export function Hero() {
           position: 'absolute',
           inset: '-10% 0',
           y: imageY,
-          backgroundImage: 'url(https://i.pinimg.com/736x/44/50/4b/44504bcf146a066d0a85889056c814cb.jpg)',
+          backgroundImage: 'url(https://i.pinimg.com/1200x/e8/0b/8e/e80b8e7942a117718bf0ca5497bc40c0.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
           backgroundRepeat: 'no-repeat',
@@ -102,16 +102,7 @@ export function Hero() {
           }}>
            
           </p>
-          <p style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '10px',
-            fontWeight: 400,
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: 'var(--accent)',
-          }}>
-            Conservatory of Music
-          </p>
+          
         </motion.div>
 
        
@@ -127,12 +118,12 @@ export function Hero() {
             marginBottom: '32px',
           }}
         >
-          Masters<br />
-          train{' '}
-          <em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>Here</em>.
+          Architects<br />
+          of{' '}
+          <em style={{ color: 'var(--accent)', fontStyle: 'italic' }}>Sound</em>.
         </motion.h1>
 
-        {/* Body */}
+        
         <motion.p
           variants={itemVariants}
           style={{
@@ -150,7 +141,7 @@ export function Hero() {
           composition, and music theory.
         </motion.p>
 
-        {/* CTA */}
+        
         <motion.div variants={itemVariants}>
           <a
             href="#programs"
@@ -178,7 +169,7 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Bottom-right metadata */}
+      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
