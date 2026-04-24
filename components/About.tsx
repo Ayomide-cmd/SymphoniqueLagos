@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { stagger, viewportOptions } from '@/lib/motion'
+import { motion, MotionStyle } from 'framer-motion'
+import { stagger } from '@/lib/motion'
+import React, { CSSProperties } from 'react'
 
 const cardEase = [0.16, 1, 0.3, 1]
 
@@ -45,7 +46,7 @@ export function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          style={s.content}
+          style={s.content as MotionStyle}
         >
           <div style={s.bodyGrid}>
             <div style={s.leadCol}>
@@ -73,7 +74,7 @@ export function About() {
               </div>
               
               <motion.div 
-                style={s.signatureBox}
+                style={s.signatureBox as MotionStyle}
                 initial={{ x: -100, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 1, ease: cardEase }}
@@ -89,7 +90,7 @@ export function About() {
   )
 }
 
-const s = {
+const s: Record<string, CSSProperties> = {
   section: {
     background: 'var(--bg-primary)',
     padding: 'clamp(100px, 20vh, 240px) clamp(24px, 5vw, 80px)',
@@ -120,7 +121,7 @@ const s = {
     color: 'var(--accent)',
     whiteSpace: 'nowrap',
     padding: '20px 0',
-  } as React.CSSProperties,
+  },
   content: {
     display: 'flex',
     flexDirection: 'column',

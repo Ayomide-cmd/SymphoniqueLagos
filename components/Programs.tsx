@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState, CSSProperties } from 'react'
+import { AnimatePresence, motion, MotionStyle } from 'framer-motion'
 import { viewportOptions } from '@/lib/motion'
 
 const programs = [
@@ -74,7 +74,7 @@ export function Programs() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={viewportOptions}
         transition={{ duration: 0.8, ease: cardEase }}
-        style={s.headerGrid}
+        style={s.headerGrid as MotionStyle}
       >
         <div style={s.titleBox}>
           <span style={s.overline}>Programmes</span>
@@ -128,7 +128,7 @@ export function Programs() {
                 {isActive && (
                   <motion.div 
                     layoutId="activeIndicator" 
-                    style={s.activeIndicator} 
+                    style={s.activeIndicator as MotionStyle} 
                     transition={{ duration: 0.4, ease: cardEase }} 
                   />
                 )}
@@ -145,7 +145,7 @@ export function Programs() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.02 }}
               transition={{ duration: 0.5, ease: cardEase }}
-              style={s.detailCard}
+              style={s.detailCard as MotionStyle}
             >
               <div style={s.detailHeader}>
                 <h3 style={s.detailTitle}>{activeProgram.title}</h3>
@@ -183,7 +183,7 @@ function DetailStat({ label, value }: { label: string; value: string }) {
   )
 }
 
-const s = {
+const s: Record<string, CSSProperties> = {
   section: {
     background: 'var(--bg-primary)',
     padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 60px)',
@@ -246,7 +246,7 @@ const s = {
     justifyContent: 'space-between',
     alignItems: 'center',
     transition: 'opacity 0.5s ease',
-  } as React.CSSProperties,
+  },
   navContent: { display: 'flex', gap: '24px', alignItems: 'center' },
   glyphWrapper: {
     width: '32px',
@@ -269,11 +269,11 @@ const s = {
     height: '4px',
     borderRadius: '999px',
     background: 'var(--accent)',
-  } as React.CSSProperties,
+  },
   detailCol: {
     position: 'sticky',
     top: '60px',
-  } as React.CSSProperties,
+  },
   detailCard: {
     padding: 'clamp(32px, 6vw, 64px)',
     border: '1px solid var(--border-subtle)',
@@ -337,5 +337,5 @@ const s = {
     textTransform: 'uppercase',
     letterSpacing: '0.3em',
     textDecoration: 'none',
-  } as React.CSSProperties,
+  },
 }
