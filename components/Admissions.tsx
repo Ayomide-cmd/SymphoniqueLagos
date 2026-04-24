@@ -1,215 +1,254 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, MotionStyle } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { fadeUp, stagger, viewportOptions } from '@/lib/motion'
+import { stagger } from '@/lib/motion'
+import React, { CSSProperties } from 'react'
 
 const steps = [
   {
-    numeral: 'i.',
     title: 'Application Submission',
-    body: 'Complete the written application, including a personal statement, documentation of prior musical study, and two references — one from a music teacher or recognised institution.',
+    body: 'Complete the written application, including a personal statement, documentation of prior musical study, and two references.',
   },
   {
-    numeral: 'ii.',
     title: 'Portfolio Review',
-    body: 'Faculty review submitted materials including recordings (where applicable) and a written theory assessment completed on-site or under supervised conditions.',
+    body: 'Faculty review submitted materials including recordings and a written theory assessment completed on-site.',
   },
   {
-    numeral: 'iii.',
     title: 'Live Audition',
-    body: 'A formal audition before a panel of three faculty members. Repertoire requirements are programme-specific and communicated upon shortlisting. There are no exceptions.',
+    body: 'A formal audition before a panel of three faculty members. Repertoire requirements are programme-specific. There are no exceptions.',
   },
   {
-    numeral: 'iv.',
     title: 'Enrolment & Placement',
-    body: 'Successful candidates receive a formal offer letter. Placement within a programme cohort is finalised following a one-to-one faculty consultation.',
+    body: 'Successful candidates receive a formal offer letter. Placement is finalised following a one-to-one faculty consultation.',
   },
 ]
 
+const cardEase = [0.16, 1, 0.3, 1]
+
+const textReveal = {
+  hidden: { y: '100%', opacity: 0, skewY: 2 },
+  visible: { 
+    y: 0, 
+    opacity: 1, 
+    skewY: 0,
+    transition: { duration: 1, ease: cardEase }
+  }
+}
+
 export function Admissions() {
   return (
-    <section
-      id="admissions"
-      style={{
-        background: 'var(--bg-secondary)',
-        padding: 'clamp(80px, 10vw, 120px) clamp(32px, 6vw, 80px)',
-      }}
-    >
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 'clamp(48px, 6vw, 80px)',
-          alignItems: 'start',
-        }}
-      >
-        {/* Left */}
+    <section id="admissions" style={s.section}>
+      <div style={s.container}>
+        
         <motion.div
           variants={stagger(0.1)}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOptions}
+          viewport={{ once: true, amount: 0.3 }}
+          style={s.leftCol}
         >
           <motion.span
-            variants={fadeUp}
-            style={{
-              display: 'block',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '11px',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-              marginBottom: '20px',
-            }}
+            variants={textReveal}
+            style={s.overline}
           >
-            04 — Admissions
+            Admissions
           </motion.span>
 
-          <motion.h2
-            variants={fadeUp}
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(36px, 4vw, 56px)',
-              fontWeight: 400,
-              lineHeight: 1.1,
-              color: 'var(--text-primary)',
-              marginBottom: '32px',
-            }}
-          >
-            We Admit<br />
-            for <em style={{ fontStyle: 'italic' }}>Readiness</em>
-          </motion.h2>
-
-          <motion.p
-            variants={fadeUp}
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '15px',
-              fontWeight: 300,
-              color: 'var(--text-secondary)',
-              lineHeight: 1.9,
-              marginBottom: '20px',
-            }}
-          >
-            Admission to Symphonique Lagos is competitive and assessed
-            holistically. We are not selecting potential alone — we are
-            selecting commitment, preparation, and the kind of seriousness
-            that sustains years of disciplined study.
-          </motion.p>
-
-          <motion.p
-            variants={fadeUp}
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '15px',
-              fontWeight: 300,
-              color: 'var(--text-secondary)',
-              lineHeight: 1.9,
-              marginBottom: '48px',
-            }}
-          >
-            Intake occurs once annually. Applications open in October and
-            close in January. All applicants are required to perform in
-            person before a panel of senior faculty.
-          </motion.p>
-
-          <motion.div variants={fadeUp}>
-            <a
-              href="#contact"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '11px',
-                fontWeight: 400,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: 'var(--text-primary)',
-                textDecoration: 'none',
-                padding: '16px 28px',
-                border: '1px solid var(--border-subtle)',
-                transition: 'border-color 0.3s, color 0.3s',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget
-                el.style.borderColor = 'var(--accent)'
-                el.style.color = 'var(--accent)'
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget
-                el.style.borderColor = 'var(--border-subtle)'
-                el.style.color = 'var(--text-primary)'
-              }}
+          <div style={{ overflow: 'hidden' }}>
+            <motion.h2
+              variants={textReveal}
+              style={s.title}
             >
+              We Admit<br />
+              for <span style={s.italic}>Readiness</span>
+            </motion.h2>
+          </div>
+
+          <motion.div variants={stagger(0.1)} style={s.descriptionBox}>
+            <div style={{ overflow: 'hidden' }}>
+              <motion.p variants={textReveal} style={s.paragraph}>
+                Admission is competitive and assessed holistically. We are selecting 
+                the kind of seriousness that sustains years of disciplined study.
+              </motion.p>
+            </div>
+            <div style={{ overflow: 'hidden' }}>
+              <motion.p variants={textReveal} style={s.paragraph}>
+                Intake occurs once annually. All applicants are required to perform 
+                in person before a panel of senior faculty.
+              </motion.p>
+            </div>
+          </motion.div>
+
+          <motion.div variants={textReveal} style={{ marginTop: '40px' }}>
+            <a href="#contact" style={s.cta}>
               Request a Prospectus
               <ArrowRight size={14} strokeWidth={1.5} />
             </a>
           </motion.div>
         </motion.div>
 
-       
-        <motion.div
-          variants={stagger(0.1, 0.1)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOptions}
-          style={{ paddingTop: 'clamp(0px, 4vw, 60px)' }}
-        >
-          {steps.map((step) => (
+        <div style={s.rightCol}>
+          {steps.map((step, index) => (
             <motion.div
-              key={step.numeral}
-              variants={fadeUp}
-              style={{
-                display: 'flex',
-                gap: '32px',
-                padding: '32px 0',
-                borderTop: '1px solid var(--border-subtle)',
-              }}
+              key={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              style={s.stepRow}
             >
-              <span
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '13px',
-                  fontStyle: 'italic',
-                  color: 'var(--accent)',
-                  flexShrink: 0,
-                  width: '24px',
-                  paddingTop: '2px',
-                }}
-              >
-                {step.numeral}
-              </span>
-              <div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '20px',
-                    fontWeight: 400,
-                    color: 'var(--text-primary)',
-                    marginBottom: '10px',
-                  }}
-                >
-                  {step.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '13px',
-                    fontWeight: 300,
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.85,
-                  }}
-                >
-                  {step.body}
-                </p>
+              <div style={s.visualCol}>
+                <motion.div 
+                  initial={{ height: 0 }}
+                  whileInView={{ height: '100%' }}
+                  transition={{ duration: 1.2, ease: cardEase, delay: index * 0.1 }}
+                  style={s.connector} 
+                />
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  style={s.dot} 
+                />
               </div>
+
+              <motion.div 
+                variants={stagger(0.05)}
+                style={s.stepContent}
+              >
+                <div style={{ overflow: 'hidden' }}>
+                  <motion.h3 variants={textReveal} style={s.stepTitle}>
+                    {step.title}
+                  </motion.h3>
+                </div>
+                <div style={{ overflow: 'hidden' }}>
+                  <motion.p variants={textReveal} style={s.stepBody}>
+                    {step.body}
+                  </motion.p>
+                </div>
+              </motion.div>
             </motion.div>
           ))}
-          <div style={{ borderTop: '1px solid var(--border-subtle)' }} />
-        </motion.div>
+        </div>
       </div>
     </section>
   )
+}
+
+const s: Record<string, CSSProperties> = {
+  section: {
+    background: 'var(--bg-primary)',
+    padding: 'clamp(100px, 15vw, 200px) clamp(24px, 5vw, 80px)',
+    borderTop: '1px solid var(--border-subtle)',
+  },
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: '80px',
+  },
+  leftCol: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  overline: {
+    display: 'block',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '10px',
+    letterSpacing: '0.3em',
+    textTransform: 'uppercase',
+    color: 'var(--accent)',
+    marginBottom: '24px',
+  },
+  title: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'clamp(40px, 5vw, 64px)',
+    fontWeight: 400,
+    lineHeight: 1,
+    color: 'var(--text-primary)',
+    margin: '0 0 40px 0',
+    letterSpacing: '-0.03em',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  descriptionBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  paragraph: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '15px',
+    fontWeight: 300,
+    color: 'var(--text-secondary)',
+    lineHeight: 1.8,
+    margin: 0,
+    maxWidth: '40ch',
+  },
+  cta: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '16px',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '10px',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    color: 'var(--text-primary)',
+    textDecoration: 'none',
+    padding: '20px 0',
+    borderBottom: '1px solid var(--accent)',
+    width: 'fit-content',
+    transition: 'opacity 0.3s',
+  },
+  rightCol: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  stepRow: {
+    display: 'grid',
+    gridTemplateColumns: '40px 1fr',
+    gap: '24px',
+    minHeight: '140px',
+  },
+  visualCol: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  connector: {
+    width: '1px',
+    background: 'var(--border-subtle)',
+    height: '100%',
+  },
+  dot: {
+    position: 'absolute',
+    top: '10px',
+    width: '5px',
+    height: '5px',
+    background: 'var(--accent)',
+    borderRadius: '50%',
+  },
+  stepContent: {
+    paddingBottom: '48px',
+  },
+  stepTitle: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: '22px',
+    fontWeight: 400,
+    color: 'var(--text-primary)',
+    margin: '0 0 12px 0',
+    letterSpacing: '-0.01em',
+  },
+  stepBody: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '14px',
+    fontWeight: 300,
+    color: 'var(--text-secondary)',
+    lineHeight: 1.7,
+    margin: 0,
+    maxWidth: '45ch',
+  },
 }
