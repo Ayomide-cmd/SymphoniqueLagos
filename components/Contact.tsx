@@ -76,7 +76,7 @@ export function Contact() {
           </div>
           <div style={{ overflow: 'hidden', marginBottom: '60px' }}>
             <motion.h2 variants={textReveal} style={s.title}>
-            Explore the <span style={s.italic}>Academy</span>
+            Contact <span style={s.italic}> Symphnonique</span>
             </motion.h2>
           </div>
 
