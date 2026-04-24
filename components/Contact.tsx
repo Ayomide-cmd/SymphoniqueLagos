@@ -23,7 +23,7 @@ const textReveal = {
   }
 }
 
-// Data
+
 const contactDetails = [
   { label: 'Address', value: '14B Bourdillon Road, Ikoyi\nLagos, Nigeria', isAddress: true },
   { label: 'Admissions', value: 'admissions@symphoniquelagos.ng', href: 'mailto:admissions@symphoniquelagos.ng' },
@@ -76,7 +76,7 @@ export function Contact() {
           </div>
           <div style={{ overflow: 'hidden', marginBottom: '60px' }}>
             <motion.h2 variants={textReveal} style={s.title}>
-              Get in <span style={s.italic}>Touch</span>
+            Explore the <span style={s.italic}>Academy</span>
             </motion.h2>
           </div>
 
