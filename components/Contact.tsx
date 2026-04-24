@@ -72,7 +72,7 @@ export function Contact() {
           style={s.leftCol}
         >
           <div style={{ overflow: 'hidden' }}>
-            <motion.span variants={textReveal} style={s.overline}>Contact</motion.span>
+            <motion.span variants={textReveal} style={s.overline}>Explore The Academy</motion.span>
           </div>
           <div style={{ overflow: 'hidden', marginBottom: '60px' }}>
             <motion.h2 variants={textReveal} style={s.title}>
