@@ -74,12 +74,7 @@ export function Contact() {
           <div style={{ overflow: 'hidden' }}>
             <motion.span variants={textReveal} style={s.overline}>Explore The Academy</motion.span>
           </div>
-          <div style={{ overflow: 'hidden', marginBottom: '60px' }}>
-            <motion.h2 variants={textReveal} style={s.title}>
-            Contact <span style={s.italic}> Symphnonique</span>
-            </motion.h2>
-          </div>
-
+          
           <div style={s.infoGrid}>
             {contactDetails.map((item, i) => (
               <motion.div key={i} variants={textReveal} style={s.infoItem}>
