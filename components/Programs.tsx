@@ -1,314 +1,341 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { stagger, viewportOptions } from '@/lib/motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { viewportOptions } from '@/lib/motion'
 
 const programs = [
   {
-    numeral: 'I',
+    slug: 'piano',
     title: 'Classical Piano Performance',
     duration: '2 — 4 Years',
     tags: ['Solo Performance', 'Chamber Music', 'Sight-Reading', 'ABRSM Aligned'],
     description:
-      'A structured study of the Western piano canon from Bach through the twentieth century. Technique, interpretation, and repertoire receive equal attention. Students undertake graded examinations aligned to ABRSM standards and perform publicly at each progression point.',
+      'A structured study of the Western piano canon from Bach through the twentieth century. Technique, interpretation, and repertoire receive equal attention.',
+    focus: 'Technical command, tonal control, and repertoire depth.',
   },
   {
-    numeral: 'II',
+    slug: 'strings',
     title: 'Orchestral Strings',
     duration: '3 Years',
     tags: ['Violin', 'Viola', 'Cello', 'Ensemble'],
     description:
-      'Violin, viola, and cello training with emphasis on ensemble performance, solo technique, and the mechanics of the bow arm. Weekly orchestral rehearsals are compulsory from the second term. Students graduate with a concerto of their choosing.',
+      'Violin, viola, and cello training with emphasis on ensemble performance, solo technique, and the mechanics of the bow arm.',
+    focus: 'Bow technique, sectional discipline, and orchestral fluency.',
   },
   {
-    numeral: 'III',
+    slug: 'vocal',
     title: 'Vocal Studies',
     duration: '2 — 3 Years',
     tags: ['Opera', 'Art Song', 'Diction', 'Five Languages'],
     description:
-      'Classical voice training for lyric soprano, mezzo-soprano, baritone, and bass. Breath mechanics, diction in five languages, and repertoire spanning four centuries of operatic and art-song tradition. Recital graduation required.',
+      'Classical voice training for lyric soprano, mezzo-soprano, baritone, and bass. Breath mechanics and diction in five languages.',
+    focus: 'Breath support, diction, and stage command.',
   },
   {
-    numeral: 'IV',
+    slug: 'theory',
     title: 'Music Theory and Composition',
     duration: '2 Years',
     tags: ['Counterpoint', 'Orchestration', 'Harmonic Analysis'],
     description:
-      'Counterpoint, harmonic analysis, orchestration, and original composition. A programme for those who wish to understand music at its structural core and to create within those structures. Final examination includes a scored work for small ensemble.',
+      'Counterpoint, harmonic analysis, orchestration, and original composition for those who wish to understand music at its structural core.',
+    focus: 'Formal analysis and advanced harmonic literacy.',
   },
   {
-    numeral: 'V',
+    slug: 'conducting',
     title: 'Conducting',
     duration: '1 — 2 Years',
     tags: ['Score Study', 'Podium Technique', 'Rehearsal Direction'],
     description:
-      'Score reading, ensemble direction, and podium mechanics. Offered exclusively to advanced students with prior conservatory-level training in an orchestral instrument. Cohort sizes are strictly limited to four per intake. Prior application required.',
+      'Score reading, ensemble direction, and podium mechanics. Offered exclusively to advanced students with prior conservatory-level training.',
+    focus: 'Gesture economy, score command, and rehearsal leadership.',
   },
   {
-    numeral: 'VI',
+    slug: 'early',
     title: 'Early Music and Musicology',
     duration: '2 Years',
     tags: ['Historical Practice', 'Archival Research', 'Scholarship'],
     description:
-      'Historical performance practice, archival study, and the scholarly traditions that undergird serious musical inquiry. A programme for the academic musician and the historically curious performer. Students produce a dissertation alongside performance work.',
+      'Historical performance practice, archival study, and the scholarly traditions that undergird serious musical inquiry.',
+    focus: 'Research methods and period interpretation.',
   },
 ]
 
+const cardEase = [0.19, 1, 0.22, 1]
+
 export function Programs() {
-  const [open, setOpen] = useState<number | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeProgram = programs[activeIndex]
 
   return (
-    <section
-      id="programs"
-      style={{
-        background: 'var(--bg-primary)',
-        padding: 'clamp(80px, 10vw, 120px) clamp(32px, 6vw, 80px)',
-      }}
-    >
-      {/* Header */}
+    <section id="programs" style={s.section}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={viewportOptions}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          marginBottom: '80px',
-          flexWrap: 'wrap',
-          gap: '24px',
-        }}
+        transition={{ duration: 0.8, ease: cardEase }}
+        style={s.headerGrid}
       >
-        <div>
-          <span style={{ display: 'block', fontFamily: 'var(--font-sans)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '20px' }}>
-            02 — Programs
-          </span>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 400, lineHeight: 1.1, color: 'var(--text-primary)' }}>
-            Programmes<br />of Study
-          </h2>
+        <div style={s.titleBox}>
+          <span style={s.overline}>Programmes</span>
+          <h2 style={s.title}>Disciplined study, performed with presence.</h2>
         </div>
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.85, maxWidth: '300px', opacity: 0.8 }}>
-          Each programme is a complete discipline. Enrolment is selective and commitment is expected.
+        <p style={s.headerDesc}>
+          Six distinct conservatory tracks, each designed as a complete artistic discipline.
         </p>
       </motion.div>
 
-      {/* Accordion list */}
-      <motion.div
-        variants={stagger(0.07)}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOptions}
-      >
-        {programs.map((program, i) => (
-          <ProgramRow
-            key={program.numeral}
-            program={program}
-            index={i}
-            isOpen={open === i}
-            onToggle={() => setOpen(open === i ? null : i)}
-          />
-        ))}
-      </motion.div>
+      <div style={s.mainGrid}>
+        <div style={s.listCol}>
+          {programs.map((program, index) => {
+            const isActive = index === activeIndex
+            return (
+              <button
+                key={program.slug}
+                onClick={() => setActiveIndex(index)}
+                style={{
+                  ...s.navButton,
+                  opacity: isActive ? 1 : 0.4,
+                }}
+              >
+                <div style={s.navContent}>
+                  <div style={s.glyphWrapper}>
+                    <motion.svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      animate={{ 
+                        rotate: isActive ? 90 : 0,
+                        scale: isActive ? 1.2 : 1
+                      }}
+                      transition={{ duration: 0.6, ease: cardEase }}
+                    >
+                      <motion.rect
+                        x="4" y="4" width="10" height="10"
+                        stroke="var(--accent)"
+                        strokeWidth={isActive ? 2 : 1}
+                        fill="none"
+                        animate={{ rx: isActive ? 5 : 0 }}
+                      />
+                    </motion.svg>
+                  </div>
+                  
+                  <div style={s.navText}>
+                    <span style={s.navTitle}>{program.title}</span>
+                  </div>
+                </div>
+                
+                {isActive && (
+                  <motion.div 
+                    layoutId="activeIndicator" 
+                    style={s.activeIndicator} 
+                    transition={{ duration: 0.4, ease: cardEase }} 
+                  />
+                )}
+              </button>
+            )
+          })}
+        </div>
+
+        <div style={s.detailCol}>
+          <AnimatePresence mode="wait">
+            <motion.article
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 0.5, ease: cardEase }}
+              style={s.detailCard}
+            >
+              <div style={s.detailHeader}>
+                <h3 style={s.detailTitle}>{activeProgram.title}</h3>
+                <div style={s.durationBadge}>{activeProgram.duration}</div>
+              </div>
+
+              <p style={s.description}>{activeProgram.description}</p>
+
+              <div style={s.statsGrid}>
+                <DetailStat label="Primary focus" value={activeProgram.focus} />
+                <DetailStat label="Culmination" value="Recital or scored final work" />
+              </div>
+
+              <div style={s.tagContainer}>
+                {activeProgram.tags.map(tag => (
+                  <span key={tag} style={s.tag}>{tag}</span>
+                ))}
+              </div>
+
+              <a href="#admissions" style={s.cta}>Begin Admissions Enquiry</a>
+            </motion.article>
+          </AnimatePresence>
+        </div>
+      </div>
     </section>
   )
 }
 
-function ProgramRow({
-  program,
-  index,
-  isOpen,
-  onToggle,
-}: {
-  program: (typeof programs)[number]
-  index: number
-  isOpen: boolean
-  onToggle: () => void
-}) {
+function DetailStat({ label, value }: { label: string; value: string }) {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 16 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-      }}
-    >
-      <button
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        style={{
-          width: '100%',
-          background: 'none',
-          border: 'none',
-          borderTop: `1px solid ${isOpen ? 'var(--accent)' : 'var(--border-subtle)'}`,
-          cursor: 'pointer',
-          padding: 'clamp(20px, 2.5vw, 28px) 0',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'clamp(16px, 3vw, 40px)',
-          textAlign: 'left',
-          transition: 'border-color 0.35s ease',
-        }}
-      >
-        {/* Roman numeral */}
-        <span
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(11px, 1.2vw, 13px)',
-            fontStyle: 'italic',
-            color: isOpen ? 'var(--accent)' : 'var(--text-secondary)',
-            opacity: isOpen ? 1 : 0.5,
-            flexShrink: 0,
-            width: '28px',
-            transition: 'color 0.35s, opacity 0.35s',
-          }}
-        >
-          {program.numeral}
-        </span>
-
-        {/* Programme title */}
-        <span
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(20px, 3.2vw, 40px)',
-            fontWeight: 400,
-            color: isOpen ? 'var(--text-primary)' : 'var(--text-primary)',
-            lineHeight: 1.1,
-            flex: 1,
-            transition: 'opacity 0.35s',
-            opacity: isOpen ? 1 : 0.75,
-            letterSpacing: '-0.01em',
-          }}
-        >
-          {program.title}
-        </span>
-
-        {/* Duration — hidden on mobile */}
-        <span
-          className="hidden sm:block"
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '11px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'var(--text-secondary)',
-            opacity: 0.5,
-            flexShrink: 0,
-          }}
-        >
-          {program.duration}
-        </span>
-
-        {/* Toggle symbol */}
-        <span
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '22px',
-            fontWeight: 300,
-            color: isOpen ? 'var(--accent)' : 'var(--text-secondary)',
-            opacity: isOpen ? 1 : 0.4,
-            flexShrink: 0,
-            width: '24px',
-            textAlign: 'right',
-            transition: 'transform 0.4s ease, color 0.35s, opacity 0.35s',
-            display: 'inline-block',
-            transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
-          }}
-        >
-          +
-        </span>
-      </button>
-
-      {/* Expandable detail */}
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            key="content"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '40px',
-                paddingBottom: 'clamp(28px, 3vw, 40px)',
-                paddingLeft: 'clamp(36px, 5vw, 68px)',
-              }}
-            >
-              {/* Description */}
-              <p
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '14px',
-                  fontWeight: 300,
-                  color: 'var(--text-secondary)',
-                  lineHeight: 1.9,
-                  maxWidth: '560px',
-                }}
-              >
-                {program.description}
-              </p>
-
-              {/* Tags + duration (mobile) + CTA */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', justifyContent: 'flex-start' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {program.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '10px',
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--text-secondary)',
-                        border: '1px solid var(--border-subtle)',
-                        padding: '4px 10px',
-                        opacity: 0.7,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="block sm:hidden">
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>
-                    {program.duration}
-                  </span>
-                </div>
-
-                <a
-                  href="#admissions"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '11px',
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-primary)',
-                    textDecoration: 'none',
-                    borderBottom: '1px solid var(--accent)',
-                    paddingBottom: '3px',
-                    width: 'fit-content',
-                    transition: 'color 0.25s',
-                    opacity: 0.85,
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.opacity = '1' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.opacity = '0.85' }}
-                >
-                  Enquire about admissions →
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+    <div style={s.statItem}>
+      <span style={s.statLabel}>{label}</span>
+      <span style={s.statValue}>{value}</span>
+    </div>
   )
+}
+
+const s = {
+  section: {
+    background: 'var(--bg-primary)',
+    padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 60px)',
+    color: 'var(--text-primary)',
+    minHeight: '100vh'
+  },
+  headerGrid: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    gap: '40px',
+    marginBottom: 'clamp(60px, 10vw, 100px)',
+  },
+  titleBox: { maxWidth: '800px' },
+  overline: {
+    display: 'block',
+    fontSize: '10px',
+    letterSpacing: '0.25em',
+    textTransform: 'uppercase',
+    color: 'var(--accent)',
+    marginBottom: '20px',
+    fontFamily: 'var(--font-sans)',
+  },
+  title: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'clamp(42px, 7vw, 84px)',
+    fontWeight: 400,
+    lineHeight: 0.95,
+    margin: 0,
+    letterSpacing: '-0.04em',
+  },
+  headerDesc: {
+    maxWidth: '280px',
+    fontSize: '13px',
+    lineHeight: 1.7,
+    opacity: 0.6,
+    fontFamily: 'var(--font-sans)',
+    letterSpacing: '0.01em'
+  },
+  mainGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+    gap: '80px',
+    alignItems: 'start',
+  },
+  listCol: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px'
+  },
+  navButton: {
+    background: 'transparent',
+    border: 'none',
+    padding: '20px 0',
+    textAlign: 'left',
+    cursor: 'pointer',
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    transition: 'opacity 0.5s ease',
+  } as React.CSSProperties,
+  navContent: { display: 'flex', gap: '24px', alignItems: 'center' },
+  glyphWrapper: {
+    width: '32px',
+    height: '32px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navText: { display: 'flex', flexDirection: 'column' },
+  navTitle: { 
+    fontFamily: 'var(--font-serif)', 
+    fontSize: 'clamp(24px, 3vw, 32px)', 
+    letterSpacing: '-0.02em',
+    lineHeight: 1.1
+  },
+  activeIndicator: {
+    position: 'absolute',
+    left: '-20px',
+    width: '4px',
+    height: '4px',
+    borderRadius: '999px',
+    background: 'var(--accent)',
+  } as React.CSSProperties,
+  detailCol: {
+    position: 'sticky',
+    top: '60px',
+  } as React.CSSProperties,
+  detailCard: {
+    padding: 'clamp(32px, 6vw, 64px)',
+    border: '1px solid var(--border-subtle)',
+    background: 'transparent',
+  },
+  detailHeader: {
+    marginBottom: '48px',
+  },
+  detailTitle: {
+    fontFamily: 'var(--font-serif)',
+    fontSize: 'clamp(36px, 5vw, 56px)',
+    margin: '0 0 24px 0',
+    fontWeight: 400,
+    lineHeight: 0.9,
+    letterSpacing: '-0.03em'
+  },
+  durationBadge: {
+    display: 'inline-block',
+    fontSize: '10px',
+    padding: '6px 14px',
+    border: '1px solid var(--border-subtle)',
+    textTransform: 'uppercase',
+    letterSpacing: '0.1em'
+  },
+  description: {
+    fontSize: '18px',
+    lineHeight: 1.7,
+    opacity: 0.8,
+    marginBottom: '48px',
+    maxWidth: '48ch',
+    fontFamily: 'var(--font-sans)',
+    fontWeight: 300
+  },
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gap: '32px',
+    marginBottom: '48px',
+    borderTop: '1px solid var(--border-subtle)',
+    paddingTop: '48px',
+  },
+  statItem: { display: 'flex', flexDirection: 'column', gap: '8px' },
+  statLabel: { fontSize: '10px', textTransform: 'uppercase', opacity: 0.4, letterSpacing: '0.15em' },
+  statValue: { fontSize: '15px', lineHeight: 1.5, opacity: 0.9 },
+  tagContainer: { display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '60px' },
+  tag: {
+    fontSize: '9px',
+    textTransform: 'uppercase',
+    padding: '5px 12px',
+    border: '1px solid var(--border-subtle)',
+    letterSpacing: '0.1em',
+    opacity: 0.7
+  },
+  cta: {
+    display: 'block',
+    textAlign: 'center',
+    background: 'var(--text-primary)',
+    color: 'var(--bg-primary)',
+    padding: '24px',
+    fontSize: '10px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.3em',
+    textDecoration: 'none',
+  } as React.CSSProperties,
 }
